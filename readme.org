@@ -1,9 +1,7 @@
 * Chris, a zsh theme for prezto
 
 ** Screenshot
-  
-  
-[[file:Chris, a zsh theme for prezto/Screen Shot 2017-02-03 at 2.30.18 PM_2017-02-03_14-32-02.png]]
+[[file:Chris, a zsh theme for prezto/Screen Shot 2017-02-03 at 2.30.18 PM_2017-02-03_14-32-02_2017-02-03_14-38-50.png]]
 
 ** Compatibility
 Unfortunately you will likely need a patched powerline font, I use[[https://github.com/tonsky/FiraCode][ Fira Code]], which also has fancy ligatures. I have also used[[https://github.com/powerline/fonts/tree/master/DejaVuSansMono][ Deja Vu Sans Mono for Powerline]] which is also very good.
