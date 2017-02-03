@@ -5,3 +5,5 @@
 Unfortunately you will likely need a patched powerline font, I use[[https://github.com/tonsky/FiraCode][ Fira Code]], which also has fancy ligatures. I have also used[[https://github.com/powerline/fonts/tree/master/DejaVuSansMono][ Deja Vu Sans Mono for Powerline]] which is also very good.
 ** Install
 the install script just makes a hard link to the correct directory in the zprezto directory. I would prefer a symbolic link, however prezto did not like that
+** Credits
+heavily modified from the [[https://github.com/paradox460/prezto/blob/paradox/modules/prompt/functions/prompt_paradox_setup][Paradox Prezto Theme]] and influenced by the[[https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/avit.zsh-theme][ avit theme from oh-my-zsh]] 
