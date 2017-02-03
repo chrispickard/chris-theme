@@ -1,5 +1,4 @@
-* Chris, a zsh theme for prezto
-
+* chris, a zsh theme for prezto
 ** Screenshot
 in the works...
 ** Compatibility
