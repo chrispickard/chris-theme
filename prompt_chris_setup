@@ -1,0 +1,111 @@
+#
+# A two-line, Powerline-inspired theme that displays contextual information.
+# Heavily "inspired" (read: taken and modified) by the paradox theme by Jeff Sandberg
+#
+# Because there are a few symbols not in a typical font, requires a powerline patched font
+# https://github.com/Lokaltog/powerline-fonts.
+#
+# Authors:
+#   Isaac Wolkerstorfer <i@agnoster.net>
+#   Jeff Sandberg <paradox460@gmail.com>
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Chris Pickard <chrispickard9@gmail.com>
+#
+# Screenshots:
+#   http://i.imgur.com/0XIWX.png
+#
+
+# Load dependencies.
+pmodload 'helper'
+
+# Define variables.
+_prompt_paradox_current_bg='NONE'
+_prompt_paradox_segment_separator=''
+
+function prompt_paradox_start_segment {
+  local bg fg
+  _prompt_paradox_current_bg="$1"
+  [[ -n "$3" ]] && print -n "$3"
+}
+
+function prompt_paradox_end_segment {
+  _prompt_paradox_current_bg=''
+}
+
+function prompt_paradox_build_prompt {
+  prompt_paradox_start_segment black default '%(?::%F{red}✘ )%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)'
+  # prompt_paradox_start_segment blue black '%{[01m%F{green}$_prompt_paradox_pwd'
+  prompt_paradox_start_segment blue black '%B%F{green}$_prompt_paradox_pwd'
+
+  if [[ -n "$git_info" ]]; then
+    prompt_paradox_start_segment green black '  %F{magenta}${(e)git_info[ref]}${(e)git_info[status]}'
+  fi
+
+  prompt_paradox_end_segment
+}
+
+function prompt_paradox_pwd {
+  local pwd="${PWD/#$HOME/~}"
+
+  _prompt_paradox_pwd="${pwd}"
+}
+
+function prompt_paradox_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Format PWD.
+  prompt_paradox_pwd
+
+  # Get Git repository information.
+  if (( $+functions[git-info] )); then
+    git-info
+  fi
+
+}
+
+function prompt_paradox_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_paradox_precmd
+
+  # Set editor-info parameters.
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format '%B%F{blue}❯%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '%F{red}♺%f'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format '%B%F{red}❮%f%b'
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:action' format ' ⁝ %s'
+  zstyle ':prezto:module:git:info:added' format ' ✚'
+  zstyle ':prezto:module:git:info:ahead' format ' ⬆'
+  zstyle ':prezto:module:git:info:behind' format ' ⬇'
+  zstyle ':prezto:module:git:info:branch' format ' %b'
+  zstyle ':prezto:module:git:info:commit' format '➦ %.7c'
+  zstyle ':prezto:module:git:info:deleted' format ' ✖'
+  zstyle ':prezto:module:git:info:dirty' format ' %b%F{red}⁝'
+  zstyle ':prezto:module:git:info:modified' format ' ✱'
+  zstyle ':prezto:module:git:info:position' format '%p'
+  zstyle ':prezto:module:git:info:renamed' format ' ➙'
+  zstyle ':prezto:module:git:info:stashed' format ' %b%F{green}S'
+  zstyle ':prezto:module:git:info:unmerged' format ' ═'
+  zstyle ':prezto:module:git:info:untracked' format ' ?'
+  zstyle ':prezto:module:git:info:keys' format \
+    'ref' '$(coalesce "%b" "%p" "%c")' \
+    'status' '%s%D%A%B%S%a%d%m%r%U%u'
+
+  # Define prompts.
+  PROMPT='
+${(e)$(prompt_paradox_build_prompt)}
+ ${editor_info[keymap]} '
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_paradox_setup "$@"
