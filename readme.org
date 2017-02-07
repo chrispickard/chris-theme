@@ -2,7 +2,7 @@
 ** Screenshot
 [[./res/screenshot.png]]
 ** Compatibility
-Unfortunately you will likely need a patched powerline font, I use[[https://github.com/tonsky/FiraCode][ Fira Code]], which also has fancy ligatures. I have also used[[https://github.com/powerline/fonts/tree/master/DejaVuSansMono][ Deja Vu Sans Mono for Powerline]] which is also very good.
+Unfortunately you will likely need a patched powerline font, I use [[https://github.com/tonsky/FiraCode][Fira Code]], which also has fancy ligatures. I have also used[[https://github.com/powerline/fonts/tree/master/DejaVuSansMono][ Deja Vu Sans Mono for Powerline]] which is also very good.
 ** Install
 the install script just makes a hard link to the correct directory in the zprezto directory. I would prefer a symbolic link, however prezto did not like that
 you will then need to set 'chris' to the theme in .zpreztorc
